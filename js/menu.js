@@ -9,11 +9,10 @@ function loadFragment(url, elementId) {
         .catch(error => console.error('Error cargando fragmento:', error));
 }
 
-// Cargar header, footer y sidebar
 Promise.all([
-    loadFragment('components/header.html', 'header'),
-    loadFragment('components/footer.html', 'footer'),
-    loadFragment('components/sidebar.html', 'sidebar')
+    loadFragment('../components/header.html', 'header'),
+    loadFragment('../components/footer.html', 'footer'),
+    loadFragment('../components/sidebar.html', 'sidebar')
 ]).then(() => {
     const menuToggle = document.getElementById('menuToggle');
     const closeMenu = document.getElementById('closeMenu');
@@ -38,15 +37,15 @@ Promise.all([
     }
 });
 
-// Definir Web Component para productos
-class MovieProduct extends HTMLElement {
+// Web Component para el menú
+class MenuItem extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
     connectedCallback() {
-        const title = this.getAttribute('title') || '';
+        const name = this.getAttribute('name') || '';
         const description = this.getAttribute('description') || '';
         const price = this.getAttribute('price') || '';
         const image = this.getAttribute('image') || '';
@@ -80,8 +79,8 @@ class MovieProduct extends HTMLElement {
                 }
             </style>
             <div class="product">
-                <img src="${image}" alt="Poster de la película" class="product-image">
-                <h3 class="product-title">${title}</h3>
+                <img src="${image}" alt="${name}" class="product-image">
+                <h3 class="product-title">${name}</h3>
                 <p class="product-description">${description}</p>
                 <p class="product-price">${price}</p>
             </div>
@@ -89,41 +88,40 @@ class MovieProduct extends HTMLElement {
     }
 }
 
-customElements.define('movie-product', MovieProduct);
+customElements.define('menu-item', MenuItem);
 
-// Cargar productos desde JSON
-fetch('data/products.json')
+// Cargar menú desde JSON
+fetch('/data/menu.json')
     .then(response => response.json())
-    .then(products => {
-        const container = document.getElementById('productsContainer');
-        const template = document.getElementById('productTemplate');
+    .then(menuItems => {
+        const container = document.getElementById('menuContainer');
+        const template = document.getElementById('menuItemTemplate');
 
-        products.forEach(product => {
-            // Usar template para algunos productos
-            if (product.useTemplate) {
+        menuItems.forEach(item => {
+            if (item.useTemplate) {
                 const clone = template.content.cloneNode(true);
-                clone.querySelector('.product-image').src = product.image;
-                clone.querySelector('.product-title').textContent = product.title;
-                clone.querySelector('.product-description').textContent = product.description;
-                clone.querySelector('.product-price').textContent = `Precio: $${product.price}`;
+                clone.querySelector('.product-image').src = item.image;
+                clone.querySelector('.product-image').alt = item.name;
+                clone.querySelector('.product-title').textContent = item.name;
+                clone.querySelector('.product-description').textContent = item.description;
+                clone.querySelector('.product-price').textContent = `Precio: $${item.price.toFixed(2)}`;
                 container.appendChild(clone);
             } else {
-                // Usar Web Component para otros
-                const movieElement = document.createElement('movie-product');
-                movieElement.setAttribute('title', product.title);
-                movieElement.setAttribute('description', product.description);
-                movieElement.setAttribute('price', `Precio: $${product.price}`);
-                movieElement.setAttribute('image', product.image);
-                container.appendChild(movieElement);
+                const element = document.createElement('menu-item');
+                element.setAttribute('name', item.name);
+                element.setAttribute('description', item.description);
+                element.setAttribute('price', `Precio: $${item.price.toFixed(2)}`);
+                element.setAttribute('image', item.image);
+                container.appendChild(element);
             }
         });
 
-        // Animaciones de scroll después de cargar productos
+        // Animaciones de scroll después de cargar items
         document.querySelectorAll('.product').forEach(item => {
             observer.observe(item);
         });
     })
-    .catch(error => console.error('Error cargando productos:', error));
+    .catch(error => console.error('Error cargando menú:', error));
 
 // Animaciones de scroll
 const observerOptions = {

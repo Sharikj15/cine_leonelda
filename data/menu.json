@@ -1,0 +1,34 @@
+[
+    {
+        "name": "Palomitas Clásicas",
+        "description": "Palomitas de maíz recién hechas, crujientes y con un toque de mantequilla.",
+        "price": 3.50,
+        "image": "https://images.unsplash.com/photo-1601924638867-3ec6d60c2c72?auto=format&fit=crop&w=300&q=80",
+        "category": "Snacks",
+        "useTemplate": true
+    },
+    {
+        "name": "Refresco Grande",
+        "description": "Bebida gaseosa de 500ml para acompañar tu película.",
+        "price": 2.00,
+        "image": "https://images.unsplash.com/photo-1580910051076-23e3278497a2?auto=format&fit=crop&w=300&q=80",
+        "category": "Bebidas",
+        "useTemplate": false
+    },
+    {
+        "name": "Hot Dog",
+        "description": "Pan suave con salchicha, salsa de tomate y mostaza.",
+        "price": 4.00,
+        "image": "https://images.unsplash.com/photo-1551817958-20204f103d61?auto=format&fit=crop&w=300&q=80",
+        "category": "Snacks",
+        "useTemplate": true
+    },
+    {
+        "name": "Nachos con Queso",
+        "description": "Totopos crujientes con salsa de queso cheddar.",
+        "price": 4.50,
+        "image": "https://images.unsplash.com/photo-1604908177524-6d18c1ce9ba0?auto=format&fit=crop&w=300&q=80",
+        "category": "Snacks",
+        "useTemplate": false
+    }
+]
