@@ -121,6 +121,10 @@ fetch('/data/menu.json')
         document.querySelectorAll('.menu-item').forEach(item => {
             observer.observe(item);
         });
+
+        // Ocultar loading
+        const loading = document.getElementById('loading');
+        if (loading) loading.style.display = 'none';
     })
     .catch(error => console.error('Error cargando menú:', error));
 

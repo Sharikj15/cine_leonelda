@@ -13,7 +13,7 @@
         "price": 2.00,
         "image": "https://images.unsplash.com/photo-1580910051076-23e3278497a2?auto=format&fit=crop&w=300&q=80",
         "category": "Bebidas",
-        "useTemplate": false
+        "useTemplate": true
     },
     {
         "name": "Hot Dog",
@@ -29,6 +29,6 @@
         "price": 4.50,
         "image": "https://images.unsplash.com/photo-1604908177524-6d18c1ce9ba0?auto=format&fit=crop&w=300&q=80",
         "category": "Snacks",
-        "useTemplate": false
+        "useTemplate": true
     }
 ]

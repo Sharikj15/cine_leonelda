@@ -11,9 +11,9 @@ function loadFragment(url, elementId) {
 
 // Cargar header, footer y sidebar
 Promise.all([
-    loadFragment('components/header.html', 'header'),
-    loadFragment('components/footer.html', 'footer'),
-    loadFragment('components/sidebar.html', 'sidebar')
+    loadFragment('../components/header.html', 'header'),
+    loadFragment('../components/footer.html', 'footer'),
+    loadFragment('../components/sidebar.html', 'sidebar')
 ]).then(() => {
     const menuToggle = document.getElementById('menuToggle');
     const closeMenu = document.getElementById('closeMenu');
@@ -92,7 +92,7 @@ class MovieProduct extends HTMLElement {
 customElements.define('movie-product', MovieProduct);
 
 // Cargar productos desde JSON
-fetch('data/products.json')
+fetch('../data/products.json')
     .then(response => response.json())
     .then(products => {
         const container = document.getElementById('productsContainer');
@@ -122,6 +122,10 @@ fetch('data/products.json')
         document.querySelectorAll('.product').forEach(item => {
             observer.observe(item);
         });
+
+        // Ocultar loading
+        const loading = document.getElementById('loading');
+        if (loading) loading.style.display = 'none';
     })
     .catch(error => console.error('Error cargando productos:', error));
 
