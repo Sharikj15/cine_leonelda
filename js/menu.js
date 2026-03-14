@@ -52,13 +52,14 @@ class MenuItem extends HTMLElement {
 
         this.shadowRoot.innerHTML = `
             <style>
-                .product {
+                .menu-item {
                     display: inline-block;
                     width: 300px;
                     margin: 10px;
                     padding: 10px;
-                    background-color: #fff;
-                    border-radius: 8px;
+                    background-color: #fff3e0;
+                    border: 2px solid #ff9800;
+                    border-radius: 12px;
                     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
                 }
                 .product-image {
@@ -78,7 +79,7 @@ class MenuItem extends HTMLElement {
                     color: #333;
                 }
             </style>
-            <div class="product">
+            <div class="menu-item">
                 <img src="${image}" alt="${name}" class="product-image">
                 <h3 class="product-title">${name}</h3>
                 <p class="product-description">${description}</p>
@@ -100,11 +101,11 @@ fetch('/data/menu.json')
         menuItems.forEach(item => {
             if (item.useTemplate) {
                 const clone = template.content.cloneNode(true);
-                clone.querySelector('.product-image').src = item.image;
-                clone.querySelector('.product-image').alt = item.name;
-                clone.querySelector('.product-title').textContent = item.name;
-                clone.querySelector('.product-description').textContent = item.description;
-                clone.querySelector('.product-price').textContent = `Precio: $${item.price.toFixed(2)}`;
+                clone.querySelector('.menu-item .product-image').src = item.image;
+                clone.querySelector('.menu-item .product-image').alt = item.name;
+                clone.querySelector('.menu-item .product-title').textContent = item.name;
+                clone.querySelector('.menu-item .product-description').textContent = item.description;
+                clone.querySelector('.menu-item .product-price').textContent = `Precio: $${item.price.toFixed(2)}`;
                 container.appendChild(clone);
             } else {
                 const element = document.createElement('menu-item');
@@ -117,7 +118,7 @@ fetch('/data/menu.json')
         });
 
         // Animaciones de scroll después de cargar items
-        document.querySelectorAll('.product').forEach(item => {
+        document.querySelectorAll('.menu-item').forEach(item => {
             observer.observe(item);
         });
     })
