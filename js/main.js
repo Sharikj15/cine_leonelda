@@ -36,6 +36,14 @@ Promise.all([
     if (overlay) {
         overlay.addEventListener('click', toggleMenu);
     }
+
+    // Event listener para logout
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            window.location.href = '../login/';
+        });
+    }
 });
 
 // Definir Web Component para productos

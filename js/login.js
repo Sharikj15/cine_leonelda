@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     // Credenciales quemadas (solo para fines educativos)
     if (username === 'admin' && password === 'admin') {
-        window.location.href = 'index.html';
+        window.location.href = '/';
     } else {
         errorMessage.textContent = 'Usuario o contraseña incorrectos.';
     }
