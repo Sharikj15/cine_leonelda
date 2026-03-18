@@ -1,0 +1,36 @@
+/* Estilos de Responsividad General */
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 50px;
+        right: 0;
+        height: calc(100vh - 60px);
+        transform: translateX(100%);
+        z-index: 999;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .close-btn {
+        display: block;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .overlay.show {
+        display: block;
+    }
+}

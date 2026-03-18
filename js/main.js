@@ -1,4 +1,3 @@
-// Cargar fragmentos dinámicamente
 function loadFragment(url, elementId) {
     return fetch(url)
         .then(response => response.text())
@@ -9,44 +8,59 @@ function loadFragment(url, elementId) {
         .catch(error => console.error('Error cargando fragmento:', error));
 }
 
-// Cargar header, footer y sidebar
-Promise.all([
-    loadFragment('../components/header.html', 'header'),
-    loadFragment('../components/footer.html', 'footer'),
-    loadFragment('../components/sidebar.html', 'sidebar')
-]).then(() => {
-    const menuToggle = document.getElementById('menuToggle');
-    const closeMenu = document.getElementById('closeMenu');
-    const overlay = document.getElementById('overlay');
-    const sidebar = document.getElementById('sidebar').querySelector('.sidebar');
-
-    function toggleMenu() {
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('show');
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof authManager !== 'undefined' && !authManager.isAuthenticated()) {
+        window.location.href = './login/';
+        return;
     }
 
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', toggleMenu);
-    }
+    Promise.all([
+        loadFragment('../components/header.html', 'header'),
+        loadFragment('../components/footer.html', 'footer'),
+        loadFragment('../components/sidebar.html', 'sidebar')
+    ]).then(() => {
+        if (typeof authManager !== 'undefined' && authManager.isAuthenticated()) {
+            const user = authManager.getCurrentUser();
+            console.log('Usuario autenticado:', user.username);
+        }
 
-    if (closeMenu) {
-        closeMenu.addEventListener('click', toggleMenu);
-    }
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenu = document.getElementById('closeMenu');
+        const overlay = document.getElementById('overlay');
+        const sidebar = document.getElementById('sidebar').querySelector('.sidebar');
 
-    if (overlay) {
-        overlay.addEventListener('click', toggleMenu);
-    }
+        function toggleMenu() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
 
-    // Event listener para logout
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            window.location.href = '../login/';
-        });
-    }
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', toggleMenu);
+        }
+
+        if (closeMenu) {
+            closeMenu.addEventListener('click', toggleMenu);
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', toggleMenu);
+        }
+
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                if (typeof authManager !== 'undefined') {
+                    authManager.logout().then(() => {
+                        window.location.href = './login/';
+                    });
+                } else {
+                    window.location.href = './login/';
+                }
+            });
+        }
+    });
 });
 
-// Definir Web Component para productos
 class MovieProduct extends HTMLElement {
     constructor() {
         super();
