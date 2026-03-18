@@ -1,24 +1,27 @@
-function loadFragment(url, elementId) {
-    return fetch(url)
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById(elementId).innerHTML = data;
-            return data;
-        })
-        .catch(error => console.error('Error cargando fragmento:', error));
+async function CargarComponente(url, elementId) {
+    try {
+        const response = await fetch(url);
+        const data = await response.text();
+        document.getElementById(elementId).innerHTML = data;
+        return data;
+    } catch (error) {
+        console.error('Error cargando componente:', error);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     if (typeof authManager !== 'undefined' && !authManager.isAuthenticated()) {
-        window.location.href = './login/';
+        window.location.href = '/login/';
         return;
     }
 
-    Promise.all([
-        loadFragment('../components/header.html', 'header'),
-        loadFragment('../components/footer.html', 'footer'),
-        loadFragment('../components/sidebar.html', 'sidebar')
-    ]).then(() => {
+    try {
+        await Promise.all([
+            CargarComponente('../components/header.html', 'header'),
+            CargarComponente('../components/footer.html', 'footer'),
+            CargarComponente('../components/sidebar.html', 'sidebar')
+        ]);
+
         if (typeof authManager !== 'undefined' && authManager.isAuthenticated()) {
             const user = authManager.getCurrentUser();
             console.log('Usuario autenticado:', user.username);
@@ -48,25 +51,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
+            logoutBtn.addEventListener('click', async () => {
                 if (typeof authManager !== 'undefined') {
-                    authManager.logout().then(() => {
-                        window.location.href = './login/';
-                    });
+                    await authManager.logout();
+                    window.location.href = '/login/';
                 } else {
-                    window.location.href = './login/';
+                    window.location.href = '/login/';
                 }
             });
         }
-    });
+    } catch (error) {
+        console.error('Error en inicialización:', error);
+    }
 });
 
 
-
-// Cargar productos desde JSON
-fetch('../data/products.json')
-    .then(response => response.json())
-    .then(products => {
+async function loadProducts() {
+    try {
+        const response = await fetch('../data/products.json');
+        const products = await response.json();
         const container = document.getElementById('productsContainer');
         const template = document.getElementById('productTemplate');
 
@@ -79,18 +82,22 @@ fetch('../data/products.json')
             container.appendChild(clone);
         });
 
-        // Animaciones de scroll después de cargar productos
+        
         document.querySelectorAll('.product').forEach(item => {
             observer.observe(item);
         });
 
-        // Ocultar loading
+        
         const loading = document.getElementById('loading');
         if (loading) loading.style.display = 'none';
-    })
-    .catch(error => console.error('Error cargando productos:', error));
+    } catch (error) {
+        console.error('Error cargando productos:', error);
+    }
+}
 
-// Animaciones de scroll
+document.addEventListener('DOMContentLoaded', loadProducts);
+
+
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'

@@ -1,4 +1,4 @@
-// Cargar fragmentos dinámicamente
+
 function loadFragment(url, elementId) {
     return fetch(url)
         .then(response => response.text())
@@ -36,7 +36,7 @@ Promise.all([
         overlay.addEventListener('click', toggleMenu);
     }
 
-    // Event listener para logout
+    
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
@@ -45,9 +45,7 @@ Promise.all([
     }
 });
 
-// Web Component para el menú - ELIMINADO (usar template HTML en su lugar)
 
-// Cargar menú desde JSON
 fetch('/data/menu.json')
     .then(response => response.json())
     .then(menuItems => {
@@ -64,18 +62,18 @@ fetch('/data/menu.json')
             container.appendChild(clone);
         });
 
-        // Animaciones de scroll después de cargar items
+        
         document.querySelectorAll('.menu-item').forEach(item => {
             observer.observe(item);
         });
 
-        // Ocultar loading
+        
         const loading = document.getElementById('loading');
         if (loading) loading.style.display = 'none';
     })
     .catch(error => console.error('Error cargando menú:', error));
 
-// Animaciones de scroll
+
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
