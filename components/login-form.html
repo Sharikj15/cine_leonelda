@@ -1,20 +1,19 @@
-<!-- Componente de Formulario de Login Reutilizable -->
+
 <div class="login-form-wrapper">
     <div class="login-card">
-        <!-- Header del login -->
+
         <div class="login-header">
             <h2>Cine Leonelda</h2>
             <p>Iniciar Sesión</p>
         </div>
 
-        <!-- Mensajes de estado -->
+
         <div id="statusMessage" class="status-message"></div>
         <div id="errorMessage" class="error-message" style="display: none;"></div>
         <div id="successMessage" class="success-message" style="display: none;"></div>
 
-        <!-- Formulario de login -->
         <form id="loginForm" class="login-form">
-            <!-- Campo de usuario -->
+    
             <div class="form-group">
                 <label for="username">
                     <span class="label-text">Usuario</span>
@@ -35,7 +34,7 @@
                 <span class="field-error-message"></span>
             </div>
 
-            <!-- Campo de contraseña -->
+         
             <div class="form-group">
                 <label for="password">
                     <span class="label-text">Contraseña</span>
@@ -57,22 +56,19 @@
                 </div>
                 <span class="field-error-message"></span>
             </div>
-
-            <!-- Información de prueba -->
             <div class="demo-info">
                 <p><strong>Credenciales de prueba:</strong></p>
                 <p>Usuario: <code>admin</code> | Contraseña: <code>admin</code></p>
                 <p>Usuario: <code>user</code> | Contraseña: <code>user123</code></p>
             </div>
 
-            <!-- Botón de envío -->
+         
             <button type="submit" class="login-button" id="submitBtn">
                 <span class="button-text">Iniciar Sesión</span>
                 <span class="button-loader" style="display: none;">⏳</span>
             </button>
         </form>
 
-        <!-- Footer del login -->
         <div class="login-footer">
             <p class="login-hint">¿Primera vez? Usa las credenciales de prueba arriba.</p>
         </div>

@@ -23,20 +23,14 @@ Promise.all([
         sidebar.classList.toggle('open');
         overlay.classList.toggle('show');
     }
-
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', toggleMenu);
-    }
-
-    if (closeMenu) {
-        closeMenu.addEventListener('click', toggleMenu);
-    }
-
-    if (overlay) {
-        overlay.addEventListener('click', toggleMenu);
-    }
-
+ 
+    (menuToggle && sidebar) ??  menuToggle.addEventListener('click', toggleMenu);
     
+    closeMenu ?? closeMenu.addEventListener('click', toggleMenu);
+    overlay ??   overlay.addEventListener('click', toggleMenu);
+    
+
+
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
@@ -62,12 +56,12 @@ fetch('/data/menu.json')
             container.appendChild(clone);
         });
 
-        
+
         document.querySelectorAll('.menu-item').forEach(item => {
             observer.observe(item);
         });
 
-        
+
         const loading = document.getElementById('loading');
         if (loading) loading.style.display = 'none';
     })

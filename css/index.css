@@ -1,8 +1,4 @@
-/* ========================================
-   CINE LEONELDA - Estructura Principal CSS
-   ======================================== */
 
-/* Importar Componentes */
 @import url("./components/header.css");
 @import url("./components/general.css");
 @import url("./components/products.css");

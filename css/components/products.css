@@ -61,7 +61,7 @@
     color: #333;
 }
 
-/* Responsividad de Productos */
+
 @media (max-width: 768px) {
     #productsContainer {
         grid-template-columns: 1fr;
