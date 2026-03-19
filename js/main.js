@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     try {
         await Promise.all([
-            CargarComponente('../components/header.html', 'header'),
-            CargarComponente('../components/footer.html', 'footer'),
+            CargarComponente('../components/header/header.html', 'header'),
+            CargarComponente('../components/footer/footer.html', 'footer'),
             CargarComponente('../components/sidebar.html', 'sidebar')
         ]);
 

@@ -10,8 +10,8 @@ function loadFragment(url, elementId) {
 }
 
 Promise.all([
-    loadFragment('../components/header.html', 'header'),
-    loadFragment('../components/footer.html', 'footer'),
+    loadFragment('../components/header/header.html', 'header'),
+    loadFragment('../components/footer/footer.html', 'footer'),
     loadFragment('../components/sidebar.html', 'sidebar')
 ]).then(() => {
     const menuToggle = document.getElementById('menuToggle');
