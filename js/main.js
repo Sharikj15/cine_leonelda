@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         await Promise.all([
             CargarComponente('../components/header/header.html', 'header'),
             CargarComponente('../components/footer/footer.html', 'footer'),
-            CargarComponente('../components/sidebar.html', 'sidebar')
+            CargarComponente('../components/sidebar/sidebar.html', 'sidebar')
         ]);
 
         if (typeof authManager !== 'undefined' && authManager.isAuthenticated()) {

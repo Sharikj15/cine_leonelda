@@ -33,6 +33,6 @@
     font-weight: bold;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li a:hover,.sidebar h2 a :hover {
     text-decoration: underline;
 }

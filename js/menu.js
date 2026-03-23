@@ -12,7 +12,7 @@ function loadFragment(url, elementId) {
 Promise.all([
     loadFragment('../components/header/header.html', 'header'),
     loadFragment('../components/footer/footer.html', 'footer'),
-    loadFragment('../components/sidebar.html', 'sidebar')
+    loadFragment('../components/sidebar/sidebar.html', 'sidebar')
 ]).then(() => {
     const menuToggle = document.getElementById('menuToggle');
     const closeMenu = document.getElementById('closeMenu');
@@ -24,10 +24,10 @@ Promise.all([
         overlay.classList.toggle('show');
     }
  
-    (menuToggle && sidebar) ??  menuToggle.addEventListener('click', toggleMenu);
+    menuToggle?.addEventListener('click', toggleMenu);
     
-    closeMenu ?? closeMenu.addEventListener('click', toggleMenu);
-    overlay ??   overlay.addEventListener('click', toggleMenu);
+    closeMenu?.addEventListener('click', toggleMenu);
+    overlay?.addEventListener('click', toggleMenu);
     
 
 

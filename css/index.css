@@ -1,11 +1,12 @@
-
-@import url("./components/header/header.css");
-@import url("./components/general.css");
-@import url("./components/products.css");
-@import url("./components/menu.css");
-@import url("./components/contact.css");
+@import url("./general.css");
+@import url("../components/header/header.css");
+@import url("../components/products/products.css");
 @import url("../components/footer/footer.css");
-@import url("./components/sidebar.css");
-@import url("./components/loading.css");
-@import url("./components/login.css");
-@import url("./components/responsive.css");
+@import url("../components/sidebar/sidebar.css");
+@import url("../components/loading/loading.css");
+
+/* Pages */
+@import url("../menu/menu.css");
+@import url("../contacto/contact.css");
+@import url("../components/login-form/login-form.css");
+ 
