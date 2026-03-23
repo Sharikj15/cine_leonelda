@@ -1,3 +1,4 @@
+// Lógica principal de layout (para todas las páginas autenticadas)
 async function CargarComponente(url, elementId) {
     try {
         const response = await fetch(url);
@@ -10,12 +11,14 @@ async function CargarComponente(url, elementId) {
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
+    // Verificar autenticación
     if (typeof authManager !== 'undefined' && !authManager.isAuthenticated()) {
         window.location.href = '/login/';
         return;
     }
 
     try {
+        // Cargar componentes principales
         await Promise.all([
             CargarComponente('../components/header/header.html', 'header'),
             CargarComponente('../components/footer/footer.html', 'footer'),
@@ -27,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log('Usuario autenticado:', user.username);
         }
 
+        // Configurar toggle del menú
         const menuToggle = document.getElementById('menuToggle');
         const closeMenu = document.getElementById('closeMenu');
         const overlay = document.getElementById('overlay');
@@ -49,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             overlay.addEventListener('click', toggleMenu);
         }
 
+        // Configurar botón de logout
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
@@ -64,49 +69,3 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('Error en inicialización:', error);
     }
 });
-
-
-async function loadProducts() {
-    try {
-        const response = await fetch('../data/products.json');
-        const products = await response.json();
-        const container = document.getElementById('productsContainer');
-        const template = document.getElementById('productTemplate');
-
-        products.forEach(product => {
-            const clone = template.content.cloneNode(true);
-            clone.querySelector('.product-image').src = product.image;
-            clone.querySelector('.product-title').textContent = product.title;
-            clone.querySelector('.product-description').textContent = product.description;
-            clone.querySelector('.product-price').textContent = `Precio: ${product.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
-            container.appendChild(clone);
-        });
-
-        
-        document.querySelectorAll('.product').forEach(item => {
-            observer.observe(item);
-        });
-
-        
-        const loading = document.getElementById('loading');
-        if (loading) loading.style.display = 'none';
-    } catch (error) {
-        console.error('Error cargando productos:', error);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', loadProducts);
-
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
-        }
-    });
-}, observerOptions);

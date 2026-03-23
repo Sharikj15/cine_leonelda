@@ -1,4 +1,4 @@
-
+// Cargar componentes del layout
 function loadFragment(url, elementId) {
     return fetch(url)
         .then(response => response.text())
@@ -9,11 +9,13 @@ function loadFragment(url, elementId) {
         .catch(error => console.error('Error cargando fragmento:', error));
 }
 
+// Cargar header, footer y sidebar
 Promise.all([
     loadFragment('../components/header/header.html', 'header'),
     loadFragment('../components/footer/footer.html', 'footer'),
     loadFragment('../components/sidebar/sidebar.html', 'sidebar')
 ]).then(() => {
+    // Configurar toggle del menú
     const menuToggle = document.getElementById('menuToggle');
     const closeMenu = document.getElementById('closeMenu');
     const overlay = document.getElementById('overlay');
@@ -25,12 +27,10 @@ Promise.all([
     }
  
     menuToggle?.addEventListener('click', toggleMenu);
-    
     closeMenu?.addEventListener('click', toggleMenu);
     overlay?.addEventListener('click', toggleMenu);
-    
 
-
+    // Configurar botón de logout
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
@@ -39,7 +39,7 @@ Promise.all([
     }
 });
 
-
+// Cargar menú de snacks
 fetch('/data/menu.json')
     .then(response => response.json())
     .then(menuItems => {
@@ -56,18 +56,18 @@ fetch('/data/menu.json')
             container.appendChild(clone);
         });
 
-
+        // Animar elementos con Intersection Observer
         document.querySelectorAll('.menu-item').forEach(item => {
             observer.observe(item);
         });
 
-
+        // Ocultar loading
         const loading = document.getElementById('loading');
         if (loading) loading.style.display = 'none';
     })
     .catch(error => console.error('Error cargando menú:', error));
 
-
+// Intersection Observer para animaciones
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'

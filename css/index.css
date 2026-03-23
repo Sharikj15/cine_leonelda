@@ -4,8 +4,6 @@
 @import url("../components/footer/footer.css");
 @import url("../components/sidebar/sidebar.css");
 @import url("../components/loading/loading.css");
-
-/* Pages */
 @import url("../menu/menu.css");
 @import url("../contacto/contact.css");
 @import url("../components/login-form/login-form.css");
