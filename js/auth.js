@@ -20,7 +20,7 @@ class GestorAutenticacion {
     iniciarSesion(usuario, contrasena) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const user = this.validarCredenciales(usuario, contraseña);
+                const user = this.validarCredenciales(usuario, contrasena);
                 
                 if (user) {
                     this.usuarioActual = {

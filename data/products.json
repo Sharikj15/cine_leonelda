@@ -1,58 +1,79 @@
 [
     {
-        "title": "The Shawshank Redemption",
-        "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+        "title": "Cadena perpetua / Sueños de libertad",
+        "description": "Dos hombres encarcelados forman un fuerte vínculo a lo largo de los años, encontrando consuelo y eventual redencion a traves de actos de decencia comun.",
         "price": 43960,
         "image": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
-        "title": "The Godfather",
-        "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+        "title": "El Padrino",
+        "description": "El anciano patriarca de una dinasia del crimen organizado transfiere el control de su imperio clandestino a su hijo reacio.",
         "price": 51960,
         "image": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
-        "title": "The Dark Knight",
-        "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
+        "title": "El Caballero Oscuro / El Caballero de la Noche",
+        "description": "Cuando la amenaza conocida como el Joker causa estragos en Gotham, Batman debe aceptar una de las mayores pruebas psicologicas y fisicas de su vida.",
         "price": 47960,
         "image": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
         "title": "Pulp Fiction",
-        "description": "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.",
+        "description": "Las vidas de dos sicarios, un boxeador, un gángster y su esposa se entrelazan en cuatro historias de violencia y redencion.",
         "price": 39960,
         "image": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
-        "title": "Inception",
-        "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+        "title": "Origen / El Origen",
+        "description": "A un ladron que roba secretos corporativos mediante tecnologia de comparticion de suenos se le asigna la tarea inversa de implantar una idea en la mente de un CEO.",
         "price": 55960,
         "image": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
-        "title": "The Dark Knight Rises",
-        "description": "Eight years after the Joker's reign of anarchy, Batman, with the help of the enigmatic Catwoman, is forced from his exile to save Gotham City from the brutal guerrilla terrorist Bane.",
+        "title": "El Caballero Oscuro: La leyenda renace / El Caballero de la Noche asciende",
+        "description": "Ocho anos despues del reinado de anarquia del Joker, Batman es obligado a salir del exilio para salvar Gotham de Bane.",
         "price": 49960,
         "image": "https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
         "title": "Interstellar",
-        "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+        "description": "Un equipo de exploradores viaja a traves de un agujero de gusano en el espacio en un intento de asegurar la supervivencia de la humanidad.",
         "price": 59960,
         "image": "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
         "useTemplate": true
     },
     {
         "title": "Forrest Gump",
-        "description": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold from the perspective of an Alabama man with an IQ of 75.",
+        "description": "Las presidencias de Kennedy y Johnson, la Guerra de Vietnam, el escandalo de Watergate y otros eventos historicos se desarrollan desde la perspectiva de un hombre de Alabama.",
         "price": 41960,
         "image": "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+        "useTemplate": true
+    },
+    {
+        "title": "Matrix",
+        "description": "Un programador de computación descubre que el mundo que conoce es una simulación creada por máquinas y se une a una rebelión para liberar a la humanidad.",
+        "price": 45960,
+        "image": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+        "useTemplate": true
+    },
+    {
+        "title": "El Señor de los Anillos: La Comunidad del Anillo",
+        "description": "Un humilde hobbit de la Comarca y ocho compañeros se embarcan en un viaje para destruir el poderoso Anillo Único y salvar a la Tierra Media.",
+        "price": 53960,
+        "image": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg",
+        "useTemplate": true
+    },
+    {
+        "title": "El Club de la Lucha / El Club de la Pelea",
+        "description": "Un oficinista insomne y un descarado fabricante de jabón forman un club de lucha clandestino que evoluciona hacia algo mucho más oscuro.",
+        "price": 40960,
+        "image": "https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg",
         "useTemplate": true
     }
 ]
