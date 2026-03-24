@@ -1,13 +1,10 @@
-// Lógica del header (actualmente vacía pero disponible para futuras funcionalidades)
-// Ejemplo: cerrar sesión, notificaciones, etc.
-
 document.addEventListener('DOMContentLoaded', function() {
-    const logoutBtn = document.getElementById('logoutBtn');
+    const botonCerrarSesion = document.getElementById('logoutBtn');
     
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', async function() {
-            if (typeof authManager !== 'undefined') {
-                await authManager.logout();
+    if (botonCerrarSesion) {
+        botonCerrarSesion.addEventListener('click', async function() {
+            if (typeof gestorAutenticacion !== 'undefined') {
+                await gestorAutenticacion.cerrarSesion();
                 window.location.href = '/login/';
             }
         });

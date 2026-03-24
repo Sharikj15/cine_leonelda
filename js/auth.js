@@ -1,35 +1,35 @@
-class AuthManager {
+class GestorAutenticacion {
     constructor() {
-        this.currentUser = this.loadUserFromStorage();
-        this.sessionTimeout = 30 * 60 * 1000;
-        this.initializeSessionTimeout();
+        this.usuarioActual = this.cargarUsuarioDelAlmacenamiento();
+        this.tiempoEsperaSession = 30 * 60 * 1000;
+        this.inicializarTiempoEsperaSession();
     }
 
-    static VALID_CREDENTIALS = [
+    static CREDENCIALES_VALIDAS = [
         { username: 'admin', password: 'admin123', role: 'admin', name: 'Administrador' },
         { username: 'user', password: 'user123', role: 'user', name: 'Usuario' }
     ];
 
-    validateCredentials(username, password) {
-        const user = AuthManager.VALID_CREDENTIALS.find(
-            cred => cred.username === username && cred.password === password
+    validarCredenciales(usuario, contrasena) {
+        const user = GestorAutenticacion.CREDENCIALES_VALIDAS.find(
+            cred => cred.username === usuario && cred.password === contrasena
         );
         return user || null;
     }
 
-    login(username, password) {
+    iniciarSesion(usuario, contrasena) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const user = this.validateCredentials(username, password);
+                const user = this.validarCredenciales(usuario, contraseña);
                 
                 if (user) {
-                    this.currentUser = {
+                    this.usuarioActual = {
                         ...user,
-                        loginTime: new Date().toISOString(),
-                        lastActivityTime: new Date().getTime()
+                        tiempoLogin: new Date().toISOString(),
+                        tiempoUltimaActividad: new Date().getTime()
                     };
-                    this.saveUserToStorage(this.currentUser);
-                    resolve({ success: true, user: this.currentUser });
+                    this.guardarUsuarioEnAlmacenamiento(this.usuarioActual);
+                    resolve({ success: true, user: this.usuarioActual });
                 } else {
                     reject({ success: false, error: 'Usuario o contraseña incorrectos' });
                 }
@@ -37,61 +37,61 @@ class AuthManager {
         });
     }
 
-    logout() {
-        this.currentUser = null;
+    cerrarSesion() {
+        this.usuarioActual = null;
         localStorage.removeItem('currentUser');
         sessionStorage.clear();
         return Promise.resolve();
     }
 
-    isAuthenticated() {
-        return this.currentUser !== null;
+    estaAutenticado() {
+        return this.usuarioActual !== null;
     }
 
-    getCurrentUser() {
-        return this.currentUser;
+    obtenerUsuarioActual() {
+        return this.usuarioActual;
     }
 
-    saveUserToStorage(user) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
+    guardarUsuarioEnAlmacenamiento(usuario) {
+        localStorage.setItem('currentUser', JSON.stringify(usuario));
     }
 
-    loadUserFromStorage() {
+    cargarUsuarioDelAlmacenamiento() {
         try {
-            const user = localStorage.getItem('currentUser');
-            return user ? JSON.parse(user) : null;
+            const usuario = localStorage.getItem('currentUser');
+            return usuario ? JSON.parse(usuario) : null;
         } catch (error) {
             console.error('Error cargando usuario de storage:', error);
             return null;
         }
     }
 
-    initializeSessionTimeout() {
-        if (this.currentUser) {
-            this.resetSessionTimeout();
+    inicializarTiempoEsperaSession() {
+        if (this.usuarioActual) {
+            this.restablecerTiempoEsperaSession();
         }
     }
 
-    resetSessionTimeout() {
-        if (this.sessionTimeoutId) {
-            clearTimeout(this.sessionTimeoutId);
+    restablecerTiempoEsperaSession() {
+        if (this.idTiempoEsperaSession) {
+            clearTimeout(this.idTiempoEsperaSession);
         }
 
-        this.sessionTimeoutId = setTimeout(() => {
-            this.logout();
+        this.idTiempoEsperaSession = setTimeout(() => {
+            this.cerrarSesion();
             window.location.href = '../login/?session=expired';
-        }, this.sessionTimeout);
+        }, this.tiempoEsperaSession);
     }
 
-    updateActivity() {
-        if (this.currentUser) {
-            this.currentUser.lastActivityTime = new Date().getTime();
-            this.resetSessionTimeout();
+    actualizarActividad() {
+        if (this.usuarioActual) {
+            this.usuarioActual.tiempoUltimaActividad = new Date().getTime();
+            this.restablecerTiempoEsperaSession();
         }
     }
 }
 
-const authManager = new AuthManager();
+const gestorAutenticacion = new GestorAutenticacion();
 
-document.addEventListener('click', () => authManager.updateActivity());
-document.addEventListener('keypress', () => authManager.updateActivity());
+document.addEventListener('click', () => gestorAutenticacion.actualizarActividad());
+document.addEventListener('keypress', () => gestorAutenticacion.actualizarActividad());

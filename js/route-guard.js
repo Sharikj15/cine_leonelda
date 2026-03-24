@@ -1,28 +1,28 @@
-class RouteGuard {
-    constructor(options = {}) {
-        this.redirectUrl = options.redirectUrl || '../login/';
-        this.requireAuth = options.requireAuth !== false;
+class ProtectorRuta {
+    constructor(opciones = {}) {
+        this.urlRedireccion = opciones.urlRedireccion || '../login/';
+        this.requiereAutenticacion = opciones.requiereAutenticacion !== false;
     }
 
-    checkAccess() {
-        const isAuthenticated = authManager.isAuthenticated();
-        if (this.requireAuth && !isAuthenticated) {
-            window.location.href = this.redirectUrl;
+    verificarAcceso() {
+        const estaAutenticado = gestorAutenticacion.estaAutenticado();
+        if (this.requiereAutenticacion && !estaAutenticado) {
+            window.location.href = this.urlRedireccion;
             return false;
         }
         return true;
     }
 
-    getAuthenticatedUser() {
-        if (!authManager.isAuthenticated()) {
+    obtenerUsuarioAutenticado() {
+        if (!gestorAutenticacion.estaAutenticado()) {
             throw new Error('Usuario no autenticado');
         }
-        return authManager.getCurrentUser();
+        return gestorAutenticacion.obtenerUsuarioActual();
     }
 }
 
-const routeGuard = new RouteGuard();
+const protectorRuta = new ProtectorRuta();
 
 document.addEventListener('DOMContentLoaded', function() {
-    routeGuard.checkAccess();
+    protectorRuta.verificarAcceso();
 });

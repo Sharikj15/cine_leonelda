@@ -1,116 +1,116 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('loginForm');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const submitBtn = document.getElementById('submitBtn');
-    const errorMessage = document.getElementById('errorMessage');
-    const successMessage = document.getElementById('successMessage');
-    const sessionExpiredMessage = document.getElementById('sessionExpiredMessage');
-    const togglePasswordBtn = document.querySelector('.toggle-password');
+    const formularioLogin = document.getElementById('loginForm');
+    const entradaUsuario = document.getElementById('username');
+    const entradaContrasena = document.getElementById('password');
+    const botonEnviar = document.getElementById('submitBtn');
+    const mensajeError = document.getElementById('errorMessage');
+    const mensajeExito = document.getElementById('successMessage');
+    const mensajeSesionExpirada = document.getElementById('sessionExpiredMessage');
+    const botonAlternadorContrasena = document.querySelector('.toggle-password');
 
-    let formValidator;
+    let validadorFormulario;
     
-    initializeLogin();
+    inicializarLogin();
 
-    function initializeLogin() {
-        formValidator = new FormValidator(loginForm);
-        checkSessionStatus();
-        loginForm.addEventListener('submit', handleLogin);
-        togglePasswordBtn?.addEventListener('click', togglePasswordVisibility);
+    function inicializarLogin() {
+        validadorFormulario = new ValidadorFormulario(formularioLogin);
+        verificarEstadoSesion();
+        formularioLogin.addEventListener('submit', gestionarLogin);
+        botonAlternadorContrasena?.addEventListener('click', alternarVisibilidadContrasena);
 
         if (localStorage.getItem('lastUsername')) {
-            usernameInput.value = localStorage.getItem('lastUsername');
-            usernameInput.focus();
+            entradaUsuario.value = localStorage.getItem('lastUsername');
+            entradaUsuario.focus();
         } else {
-            usernameInput.focus();
+            entradaUsuario.focus();
         }
     }
 
-    function checkSessionStatus() {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('session') === 'expired') {
-            showSessionExpired();
+    function verificarEstadoSesion() {
+        const parametros = new URLSearchParams(window.location.search);
+        if (parametros.get('session') === 'expired') {
+            mostrarSesionExpirada();
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
 
-    function showSessionExpired() {
-        sessionExpiredMessage.style.display = 'block';
+    function mostrarSesionExpirada() {
+        mensajeSesionExpirada.style.display = 'block';
         setTimeout(() => {
-            sessionExpiredMessage.style.display = 'none';
+            mensajeSesionExpirada.style.display = 'none';
         }, 5000);
     }
 
-    async function handleLogin(e) {
+    async function gestionarLogin(e) {
         e.preventDefault();
-        hideAllMessages();
-        if (!formValidator.validateForm()) {
+        ocultarTodosMensajes();
+        if (!validadorFormulario.validarFormulario()) {
             return;
         }
 
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value;
-        showLoading();
+        const usuario = entradaUsuario.value.trim();
+        const contrasena = entradaContrasena.value;
+        mostrarCargando();
 
         try {
-            const result = await authManager.login(username, password);
+            const resultado = await gestorAutenticacion.iniciarSesion(usuario, contrasena);
 
-            if (result.success) {
-                showSuccess(`¡Bienvenido, ${result.user.name}!`);
-                localStorage.setItem('lastUsername', username);
+            if (resultado.success) {
+                mostrarExito(`¡Bienvenido, ${resultado.user.name}!`);
+                localStorage.setItem('lastUsername', usuario);
 
                 setTimeout(() => {
                     window.location.href = '/';
                 }, 1500);
             }
         } catch (error) {
-            showError(error.error || 'Error al iniciar sesión. Intenta de nuevo.');
+            mostrarError(error.error || 'Error al iniciar sesión. Intenta de nuevo.');
         } finally {
-            hideLoading();
+            ocultarCargando();
         }
     }
 
-    function togglePasswordVisibility(e) {
+    function alternarVisibilidadContrasena(e) {
         e.preventDefault();
-        const type = passwordInput.type === 'password' ? 'text' : 'password';
-        passwordInput.type = type;
-        const icon = togglePasswordBtn.querySelector('i');
-        if (type === 'password') {
-            icon.className = 'fas fa-eye';
+        const tipo = entradaContrasena.type === 'password' ? 'text' : 'password';
+        entradaContrasena.type = tipo;
+        const icono = botonAlternadorContrasena.querySelector('i');
+        if (tipo === 'password') {
+            icono.className = 'fas fa-eye';
         } else {
-            icon.className = 'fas fa-eye-slash';
+            icono.className = 'fas fa-eye-slash';
         }
     }
 
-    function showError(message) {
-        errorMessage.textContent = message;
-        errorMessage.style.display = 'block';
-        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    function mostrarError(mensaje) {
+        mensajeError.textContent = mensaje;
+        mensajeError.style.display = 'block';
+        mensajeError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         setTimeout(() => {
-            errorMessage.style.display = 'none';
+            mensajeError.style.display = 'none';
         }, 5000);
     }
 
-    function showSuccess(message) {
-        successMessage.textContent = message;
-        successMessage.style.display = 'block';
+    function mostrarExito(mensaje) {
+        mensajeExito.textContent = mensaje;
+        mensajeExito.style.display = 'block';
     }
 
-    function showLoading() {
-        submitBtn.disabled = true;
-        submitBtn.querySelector('.button-text').style.display = 'none';
-        submitBtn.querySelector('.button-loader').style.display = 'inline-block';
+    function mostrarCargando() {
+        botonEnviar.disabled = true;
+        botonEnviar.querySelector('.button-text').style.display = 'none';
+        botonEnviar.querySelector('.button-loader').style.display = 'inline-block';
     }
 
-    function hideLoading() {
-        submitBtn.disabled = false;
-        submitBtn.querySelector('.button-text').style.display = 'inline';
-        submitBtn.querySelector('.button-loader').style.display = 'none';
+    function ocultarCargando() {
+        botonEnviar.disabled = false;
+        botonEnviar.querySelector('.button-text').style.display = 'inline';
+        botonEnviar.querySelector('.button-loader').style.display = 'none';
     }
 
-    function hideAllMessages() {
-        errorMessage.style.display = 'none';
-        successMessage.style.display = 'none';
-        sessionExpiredMessage.style.display = 'none';
+    function ocultarTodosMensajes() {
+        mensajeError.style.display = 'none';
+        mensajeExito.style.display = 'none';
+        mensajeSesionExpirada.style.display = 'none';
     }
 });

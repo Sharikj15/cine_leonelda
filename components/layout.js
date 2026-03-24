@@ -1,64 +1,59 @@
-// Lógica principal de layout (para todas las páginas autenticadas)
-async function CargarComponente(url, elementId) {
+async function CargarComponente(url, idElemento) {
     try {
-        const response = await fetch(url);
-        const data = await response.text();
-        document.getElementById(elementId).innerHTML = data;
-        return data;
+        const respuesta = await fetch(url);
+        const datos = await respuesta.text();
+        document.getElementById(idElemento).innerHTML = datos;
+        return datos;
     } catch (error) {
         console.error('Error cargando componente:', error);
     }
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-    // Verificar autenticación
-    if (typeof authManager !== 'undefined' && !authManager.isAuthenticated()) {
+    if (typeof gestorAutenticacion !== 'undefined' && !gestorAutenticacion.estaAutenticado()) {
         window.location.href = '/login/';
         return;
     }
 
     try {
-        // Cargar componentes principales
         await Promise.all([
             CargarComponente('../components/header/header.html', 'header'),
             CargarComponente('../components/footer/footer.html', 'footer'),
             CargarComponente('../components/sidebar/sidebar.html', 'sidebar')
         ]);
 
-        if (typeof authManager !== 'undefined' && authManager.isAuthenticated()) {
-            const user = authManager.getCurrentUser();
-            console.log('Usuario autenticado:', user.username);
+        if (typeof gestorAutenticacion !== 'undefined' && gestorAutenticacion.estaAutenticado()) {
+            const usuario = gestorAutenticacion.obtenerUsuarioActual();
+            console.log('Usuario autenticado:', usuario.username);
         }
 
-        // Configurar toggle del menú
-        const menuToggle = document.getElementById('menuToggle');
-        const closeMenu = document.getElementById('closeMenu');
-        const overlay = document.getElementById('overlay');
-        const sidebar = document.getElementById('sidebar').querySelector('.sidebar');
+        const botonAlternador = document.getElementById('menuToggle');
+        const botonCerrar = document.getElementById('closeMenu');
+        const sobreposicion = document.getElementById('overlay');
+        const barraSuspensiva = document.getElementById('sidebar').querySelector('.sidebar');
 
-        function toggleMenu() {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
+        function alternarMenu() {
+            barraSuspensiva.classList.toggle('open');
+            sobreposicion.classList.toggle('show');
         }
 
-        if (menuToggle && sidebar) {
-            menuToggle.addEventListener('click', toggleMenu);
+        if (botonAlternador && barraSuspensiva) {
+            botonAlternador.addEventListener('click', alternarMenu);
         }
 
-        if (closeMenu) {
-            closeMenu.addEventListener('click', toggleMenu);
+        if (botonCerrar) {
+            botonCerrar.addEventListener('click', alternarMenu);
         }
 
-        if (overlay) {
-            overlay.addEventListener('click', toggleMenu);
+        if (sobreposicion) {
+            sobreposicion.addEventListener('click', alternarMenu);
         }
 
-        // Configurar botón de logout
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-                if (typeof authManager !== 'undefined') {
-                    await authManager.logout();
+        const botonCerrarSesion = document.getElementById('logoutBtn');
+        if (botonCerrarSesion) {
+            botonCerrarSesion.addEventListener('click', async () => {
+                if (typeof gestorAutenticacion !== 'undefined') {
+                    await gestorAutenticacion.cerrarSesion();
                     window.location.href = '/login/';
                 } else {
                     window.location.href = '/login/';
@@ -66,6 +61,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             });
         }
     } catch (error) {
-        console.error('Error en inicialización:', error);
+        console.error('Error en inicializacion:', error);
     }
 });

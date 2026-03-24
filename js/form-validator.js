@@ -1,135 +1,135 @@
-class FormValidator {
-    constructor(formElement) {
-        this.form = formElement;
-        this.errors = {};
-        this.setupEventListeners();
+class ValidadorFormulario {
+    constructor(elementoFormulario) {
+        this.formulario = elementoFormulario;
+        this.errores = {};
+        this.configurarOyentesEventos();
     }
 
-    setupEventListeners() {
-        const inputs = this.form.querySelectorAll('input, textarea, select');
+    configurarOyentesEventos() {
+        const entradas = this.formulario.querySelectorAll('input, textarea, select');
         
-        inputs.forEach(input => {
-            input.addEventListener('blur', (e) => this.validateField(e.target));
-            input.addEventListener('input', (e) => {
-                if (this.errors[e.target.name]) {
-                    this.validateField(e.target);
+        entradas.forEach(entrada => {
+            entrada.addEventListener('blur', (e) => this.validarCampo(e.target));
+            entrada.addEventListener('input', (e) => {
+                if (this.errores[e.target.name]) {
+                    this.validarCampo(e.target);
                 }
             });
         });
     }
 
-    validateField(field) {
-        const value = field.value.trim();
-        const name = field.name;
-        const type = field.type;
-        const rules = field.dataset.rules?.split(',') || [];
+    validarCampo(campo) {
+        const valor = campo.value.trim();
+        const nombre = campo.name;
+        const tipo = campo.type;
+        const reglas = campo.dataset.rules?.split(',') || [];
 
-        this.errors[name] = [];
+        this.errores[nombre] = [];
 
-        if (field.required && !value) {
-            this.errors[name].push(`${this.getFieldLabel(field)} es requerido`);
-            this.showFieldError(field);
+        if (campo.required && !valor) {
+            this.errores[nombre].push(`${this.obtenerEtiquetaCampo(campo)} es requerido`);
+            this.mostrarErrorCampo(campo);
             return false;
         }
 
-        for (const rule of rules) {
-            const trimmedRule = rule.trim();
+        for (const regla of reglas) {
+            const reglaFormateada = regla.trim();
             
-            if (trimmedRule === 'email' && value && !this.isValidEmail(value)) {
-                this.errors[name].push('Correo electrónico inválido');
-            } else if (trimmedRule.startsWith('minlength:')) {
-                const minLength = parseInt(trimmedRule.split(':')[1]);
-                if (value && value.length < minLength) {
-                    this.errors[name].push(`Mínimo ${minLength} caracteres`);
+            if (reglaFormateada === 'email' && valor && !this.esCorreoValido(valor)) {
+                this.errores[nombre].push('Correo electronico invalido');
+            } else if (reglaFormateada.startsWith('minlength:')) {
+                const largoMinimo = parseInt(reglaFormateada.split(':')[1]);
+                if (valor && valor.length < largoMinimo) {
+                    this.errores[nombre].push(`Minimo ${largoMinimo} caracteres`);
                 }
-            } else if (trimmedRule.startsWith('maxlength:')) {
-                const maxLength = parseInt(trimmedRule.split(':')[1]);
-                if (value && value.length > maxLength) {
-                    this.errors[name].push(`Máximo ${maxLength} caracteres`);
+            } else if (reglaFormateada.startsWith('maxlength:')) {
+                const largoMaximo = parseInt(reglaFormateada.split(':')[1]);
+                if (valor && valor.length > largoMaximo) {
+                    this.errores[nombre].push(`Maximo ${largoMaximo} caracteres`);
                 }
-            } else if (trimmedRule === 'username' && value) {
-                if (!this.isValidUsername(value)) {
-                    this.errors[name].push('Usuario solo puede contener letras, números y guiones');
+            } else if (reglaFormateada === 'username' && valor) {
+                if (!this.esUsuarioValido(valor)) {
+                    this.errores[nombre].push('Usuario solo puede contener letras, numeros y guiones');
                 }
-            } else if (trimmedRule === 'phone' && value && !this.isValidPhone(value)) {
-                this.errors[name].push('Teléfono inválido');
+            } else if (reglaFormateada === 'phone' && valor && !this.esTelefonoValido(valor)) {
+                this.errores[nombre].push('Telefono invalido');
             }
         }
 
-        if (this.errors[name].length > 0) {
-            this.showFieldError(field);
+        if (this.errores[nombre].length > 0) {
+            this.mostrarErrorCampo(campo);
             return false;
         } else {
-            this.clearFieldError(field);
+            this.limpiarErrorCampo(campo);
             return true;
         }
     }
 
-    validateForm() {
-        const inputs = this.form.querySelectorAll('input, textarea, select');
-        let isValid = true;
+    validarFormulario() {
+        const entradas = this.formulario.querySelectorAll('input, textarea, select');
+        let esValido = true;
 
-        inputs.forEach(input => {
-            if (!this.validateField(input)) {
-                isValid = false;
+        entradas.forEach(entrada => {
+            if (!this.validarCampo(entrada)) {
+                esValido = false;
             }
         });
 
-        return isValid;
+        return esValido;
     }
 
-    showFieldError(field) {
-        field.classList.add('field-error');
+    mostrarErrorCampo(campo) {
+        campo.classList.add('field-error');
         
-        let errorContainer = field.parentElement.querySelector('.field-error-message');
-        if (!errorContainer) {
-            errorContainer = document.createElement('span');
-            errorContainer.className = 'field-error-message';
-            field.parentElement.appendChild(errorContainer);
+        let contenedorError = campo.parentElement.querySelector('.field-error-message');
+        if (!contenedorError) {
+            contenedorError = document.createElement('span');
+            contenedorError.className = 'field-error-message';
+            campo.parentElement.appendChild(contenedorError);
         }
 
-        errorContainer.textContent = this.errors[field.name] ? this.errors[field.name][0] : '';
-        errorContainer.style.display = 'block';
+        contenedorError.textContent = this.errores[campo.name] ? this.errores[campo.name][0] : '';
+        contenedorError.style.display = 'block';
     }
 
-    clearFieldError(field) {
-        field.classList.remove('field-error');
+    limpiarErrorCampo(campo) {
+        campo.classList.remove('field-error');
         
-        const errorContainer = field.parentElement.querySelector('.field-error-message');
-        if (errorContainer) {
-            errorContainer.style.display = 'none';
+        const contenedorError = campo.parentElement.querySelector('.field-error-message');
+        if (contenedorError) {
+            contenedorError.style.display = 'none';
         }
 
-        delete this.errors[field.name];
+        delete this.errores[campo.name];
     }
 
-    isValidEmail(email) {
+    esCorreoValido(correo) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
+        return regex.test(correo);
     }
 
-    isValidUsername(username) {
+    esUsuarioValido(usuario) {
         const regex = /^[a-zA-Z0-9_-]{3,20}$/;
-        return regex.test(username);
+        return regex.test(usuario);
     }
 
-    isValidPhone(phone) {
+    esTelefonoValido(telefono) {
         const regex = /^[\d\s\-\+\(\)]{10,}$/;
-        return regex.test(phone);
+        return regex.test(telefono);
     }
 
-    getFieldLabel(field) {
-        const label = this.form.querySelector(`label[for="${field.id}"]`);
-        return label ? label.textContent : field.name;
+    obtenerEtiquetaCampo(campo) {
+        const etiqueta = this.formulario.querySelector(`label[for="${campo.id}"]`);
+        return etiqueta ? etiqueta.textContent : campo.name;
     }
 
-    getErrors() {
-        return this.errors;
+    obtenerErrores() {
+        return this.errores;
     }
 
-    clearAllErrors() {
-        this.errors = {};
-        const fields = this.form.querySelectorAll('input, textarea, select');
-        fields.forEach(field => this.clearFieldError(field));
+    limpiarTodosLosErrores() {
+        this.errores = {};
+        const campos = this.formulario.querySelectorAll('input, textarea, select');
+        campos.forEach(campo => this.limpiarErrorCampo(campo));
     }
 }
